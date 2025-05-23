@@ -1,0 +1,69 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using SquidOps_AssetSquid.DAL;
+using SquidOps_AssetSquid.Models;
+
+namespace SquidOps_AssetSquid.Views
+{
+    /// <summary>
+    /// Interaction logic for Window1.xaml
+    /// </summary>
+    
+    public partial class LocationsView : Window
+    {
+        private readonly LocationAdapter _adapter;
+        public LocationsView()
+        {
+            InitializeComponent();
+
+            // Load data
+            _adapter = new LocationAdapter();
+            LoadLocations();
+        }
+
+        private void LoadLocations()
+        {
+            List<Location> locations = _adapter.GetAll().ToList();
+            LocationGrid.ItemsSource = locations;
+        }
+
+        private void AddLocation_Click(object sender, RoutedEventArgs e)
+        {
+            var addWindow = new AddLocationView();
+            addWindow.Owner = this;
+            addWindow.ShowDialog();
+            LoadLocations(); // Refresh after adding
+        }
+
+        private void GoToMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var menu = new MainWindow();
+            menu.Show();
+            this.Close();
+        }
+
+        private void GoToDevices_Click(object sender, RoutedEventArgs e)
+        {
+            var devices = new DevicesView();
+            devices.Show();
+            this.Close();
+        }
+
+        private void GoToPrivacy_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Redirect to Privacy window or modal.");
+            // TODO: Implement Privacy window if needed
+        }
+    }
+}

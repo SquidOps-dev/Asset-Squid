@@ -1,0 +1,5 @@
+# Visual Studio workspace folder (hidden)
+.vs/
+# build outputs
+bin/
+obj/

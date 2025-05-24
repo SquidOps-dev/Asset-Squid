@@ -1,104 +1,102 @@
 ﻿using Microsoft.Data.Sqlite;
 using Dapper;
 using SquidOps_AssetSquid.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SquidOps_AssetSquid.DAL
 {
+    /// <summary>
+    /// Implements ILocationAdapter to manage Location records in SQLite.
+    /// </summary>
     public class LocationAdapter : ILocationAdapter
     {
-        // SQLite connection string; points to the inventory.db file
-        // in the root of the program folder.
+        // Connection string pointing to the SQLite database file (inventory.db)
         private string connectionString = @"Data Source=inventory.db";
 
+        /// <summary>
+        /// Default constructor sets the connection string (identical to field initializer).
+        /// </summary>
         public LocationAdapter()
         {
-
-            var dbFullPath = @"Data Source=inventory.db";
+            var dbFullPath = @"Data Source=inventory.db"; // Path to DB file
             connectionString = dbFullPath;
         }
 
-        // Retrieves all device records from the Locations table.
+        /// <summary>
+        /// Retrieves all Locations: SELECT LocationId and Name.
+        /// </summary>
         public List<Location> GetAll()
         {
-            // SQL query selecting all columns for mapping to Location objects.
             const string sql = @"
-                                SELECT LocationId, Name 
-                                FROM Locations";
+                SELECT LocationId, Name
+                FROM Locations";
 
-            // Create and open a new SQLite connection.
-            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            using (var connection = new SqliteConnection(connectionString))
             {
-                // Execute the query and map results to IEnumerable<Location>.
+                // Execute the query and convert the results to a List<Location>
                 return connection.Query<Location>(sql).ToList();
             }
         }
-        // Retrieves a specific device by its ID.
+
+        /// <summary>
+        /// Retrieves a single Location by ID.
+        /// </summary>
         public Location GetById(int id)
         {
-            // SQL query with parameter placeholder to prevent SQL injection.
             const string sql = @"
-                                SELECT Name 
-                                FROM Locations 
-                                WHERE LocationId = @LocationId";
-                                    
+                SELECT LocationId, Name
+                FROM Locations
+                WHERE LocationId = @LocationId";
 
-            using var connection = new SqliteConnection(connectionString); // Open connection.
-
-            // Execute the query, passing id into the parameter, and return first match.
+            using var connection = new SqliteConnection(connectionString);
+            // QueryFirst returns the first row or throws; adjust if you want null instead
             return connection.QueryFirst<Location>(sql, new { LocationId = id });
         }
-        // Inserts a new device record into the database.
+
+        /// <summary>
+        /// Inserts a new Location record into the table.
+        /// </summary>
         public bool InsertLocation(Location location)
         {
-            // SQL insert statement using named parameters matching Device properties.
             const string sql = @"
-                                INSERT INTO Locations (Name) 
-                                VALUES (@Name)";
+                INSERT INTO Locations (Name)
+                VALUES (@Name)";
 
-            using (SqliteConnection connection = new SqliteConnection(connectionString)) // Open Connection
-            {
-                // Execute the insert; returns number of rows affected.
-                int rowsAffected = connection.Execute(sql, location);
-                if (rowsAffected > 0)
-                {
-                    // Return true if at least one row was inserted.
-                    return true;
-                }
-                else
-                {
-                    // Return false if no rows were inserted.
-                    return false;
-                }
-            }
+            using var connection = new SqliteConnection(connectionString);
+            // Execute returns number of rows affected
+            int rows = connection.Execute(sql, location);
+            return rows > 0; // Return true if at least one row inserted
         }
-        // Updates an existing device from the Devices table.
+
+        /// <summary>
+        /// Updates an existing Location record by ID.
+        /// </summary>
         public bool UpdateLocation(Location location)
         {
-            // SQL update statement with WHERE clause to target specific DeviceId.
             const string sql = @"
-                                UPDATE Locations 
-                                SET LocationId= @LocationId, Name= @Name 
-                                WHERE LocationId= @LocationId";
+                UPDATE Locations
+                SET Name = @Name
+                WHERE LocationId = @LocationId";
 
-            // Open connection.
             using var connection = new SqliteConnection(connectionString);
-
-            // Execute the update; returns number of rows affected.
+            // Returns true if at least one row was updated
             return connection.Execute(sql, location) > 0;
         }
-        // Deletes an location record by its ID.
+
+        /// <summary>
+        /// Deletes a Location record matching the specified ID.
+        /// </summary>
         public bool DeleteLocationById(int id)
         {
-            // SQL delete statement using parameter to specify which record to remove.
             const string sql = @"
-                                DELETE FROM Locations 
-                                WHERE LocationId = @LocationId";
+                DELETE FROM Locations
+                WHERE LocationId = @LocationId";
 
-            using var connection = new SqliteConnection(connectionString); // Open connection.
-            // Execute delete; returns number of rows affected.
-            int rowsAffected = connection.Execute(sql, new { LocationId = id });
-            // Return true if deletion succeeded.
-            return rowsAffected > 0;
+            using var connection = new SqliteConnection(connectionString);
+            // Execute the delete and check number of rows affected
+            int rows = connection.Execute(sql, new { LocationId = id });
+            return rows > 0; // Return true if delete succeeded
         }
     }
 }

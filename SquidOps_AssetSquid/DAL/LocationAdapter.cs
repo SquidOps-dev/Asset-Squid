@@ -23,24 +23,29 @@ namespace SquidOps_AssetSquid.DAL
         }
 
         // Retrieves all device records from the Locations table.
-        public IEnumerable<Location> GetAll()
+        public List<Location> GetAll()
         {
             // SQL query selecting all columns for mapping to Location objects.
-            const string sql = "SELECT LocationId, Name FROM Locations";
+            const string sql = @"
+                                SELECT LocationId, Name 
+                                FROM Locations";
 
             // Create and open a new SQLite connection.
             using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
                 // Execute the query and map results to IEnumerable<Location>.
-                return connection.Query<Location>(sql);
+                return connection.Query<Location>(sql).ToList();
             }
         }
         // Retrieves a specific device by its ID.
         public Location GetById(int id)
         {
             // SQL query with parameter placeholder to prevent SQL injection.
-            const string sql = @"SELECT LocationId, Name, FROM Locations WHERE 
-                            LocationId = @LocationId";
+            const string sql = @"
+                                SELECT Name 
+                                FROM Locations 
+                                WHERE LocationId = @LocationId";
+                                    
 
             using var connection = new SqliteConnection(connectionString); // Open connection.
 
@@ -51,8 +56,9 @@ namespace SquidOps_AssetSquid.DAL
         public bool InsertLocation(Location location)
         {
             // SQL insert statement using named parameters matching Device properties.
-            const string sql = @"INSERT INTO Locations 
-                (Name) VALUES (@Name)";
+            const string sql = @"
+                                INSERT INTO Locations (Name) 
+                                VALUES (@Name)";
 
             using (SqliteConnection connection = new SqliteConnection(connectionString)) // Open Connection
             {
@@ -74,8 +80,10 @@ namespace SquidOps_AssetSquid.DAL
         public bool UpdateLocation(Location location)
         {
             // SQL update statement with WHERE clause to target specific DeviceId.
-            const string sql = @"UPDATE Locations SET LocationId= @LocationId, 
-                        Name= @Name WHERE LocationId= @LocationId";
+            const string sql = @"
+                                UPDATE Locations 
+                                SET LocationId= @LocationId, Name= @Name 
+                                WHERE LocationId= @LocationId";
 
             // Open connection.
             using var connection = new SqliteConnection(connectionString);
@@ -87,7 +95,9 @@ namespace SquidOps_AssetSquid.DAL
         public bool DeleteLocationById(int id)
         {
             // SQL delete statement using parameter to specify which record to remove.
-            const string sql = "DELETE FROM Locations WHERE LocationId = @LocationId";
+            const string sql = @"
+                                DELETE FROM Locations 
+                                WHERE LocationId = @LocationId";
 
             using var connection = new SqliteConnection(connectionString); // Open connection.
             // Execute delete; returns number of rows affected.

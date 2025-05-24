@@ -25,6 +25,8 @@
                     Background="Transparent" BorderBrush="Transparent" Foreground="White" Cursor="Hand"/>
             <Button Content="Locations" Margin="5,0" Padding="10,4" Click="Locations_Click"
                     Background="Transparent" BorderBrush="Transparent" Foreground="White" Cursor="Hand"/>
+            <Button Content="Reports" Margin="5,0" Padding="10,4" Click="Reports_Click"
+                    Background="Transparent" BorderBrush="Transparent" Foreground="White" Cursor="Hand"/>
             <Button Content="Privacy" Margin="5,0" Padding="10,4" Click="Privacy_Click"
                     Background="Transparent" BorderBrush="Transparent" Foreground="White" Cursor="Hand"/>
         </StackPanel>
@@ -55,20 +57,21 @@
                 BorderThickness="2"
                 CornerRadius="12"
                 Padding="10">
+
             <DataGrid x:Name="DeviceGrid"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      IsReadOnly="True"
-                      AlternatingRowBackground="#1b1b1b"
-                      RowBackground="Gray"
-                      GridLinesVisibility="Horizontal"
-                      BorderThickness="0"
-                      HeadersVisibility="Column"
-                      FontSize="14"
-                      RowHeight="32"
-                      ColumnHeaderHeight="36"
-                      Foreground="Black"
-                      Background="Black">
+          AutoGenerateColumns="False"
+          CanUserAddRows="False"
+          IsReadOnly="True"
+          AlternatingRowBackground="#1b1b1b"
+          RowBackground="Gray"
+          GridLinesVisibility="Horizontal"
+          BorderThickness="0"
+          HeadersVisibility="Column"
+          FontSize="14"
+          RowHeight="32"
+          ColumnHeaderHeight="36"
+          Foreground="Black"
+          Background="Black">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
                     <DataGridTextColumn Header="Serial Number" Binding="{Binding SerialNumber}" Width="*" />
@@ -77,8 +80,22 @@
                     <DataGridTextColumn Header="Model" Binding="{Binding DeviceModel}" Width="*" />
                     <DataGridTextColumn Header="Device Type" Binding="{Binding DeviceTypeName}" Width="*" />
                     <DataGridTextColumn Header="Location" Binding="{Binding LocationName}" Width="*" />
+
+                    <!-- Actions column moved inside Columns -->
+                    <DataGridTemplateColumn Header="Actions" Width="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="6">
+                                    <Button Content="Edit" Click="EditDevice_Click" Tag="{Binding}" />
+                                    <Button Content="Del" Click="DeleteDevice_Click" Tag="{Binding}" />
+                                    <Button Content="QR Code" Click="GenerateQR_Click" Tag="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+
         </Border>
     </Grid>
 </Window>

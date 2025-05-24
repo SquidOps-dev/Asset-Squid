@@ -25,11 +25,27 @@ namespace SquidOps_AssetSquid.Views
         private readonly LocationAdapter _locationAdapter = new LocationAdapter();
         private readonly DeviceTypeAdapter _typeAdapter = new DeviceTypeAdapter();
 
-        
+        private int? _editingId = null;
+
         public AddDeviceView()
         {
             InitializeComponent();
             LoadDropDowns();
+        }
+
+        public AddDeviceView(Device device)
+        {
+            InitializeComponent();
+            LoadDropDowns();
+
+            _editingId = device.DeviceId;
+            NameBox.Text = device.Name;
+            SerialBox.Text = device.SerialNumber;
+            IpBox.Text = device.IpAddress;
+            MacBox.Text = device.MacAddress;
+            ModelBox.Text = device.DeviceModel;
+            LocationCombo.SelectedValue = device.LocationId;
+            TypeCombo.SelectedValue = device.DeviceTypeId;
         }
 
         private void LoadDropDowns()

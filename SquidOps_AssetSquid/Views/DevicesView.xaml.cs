@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using QRCoder;
 using SquidOps_AssetSquid.Models;
 using SquidOps_AssetSquid.DAL;
 
@@ -25,7 +26,7 @@ namespace SquidOps_AssetSquid.Views
 
             _adapter = new DeviceAdapter();
 
-            LoadDevices(); // optional if you're loading data here
+            LoadDevices();
         }
 
         private void LoadDevices()
@@ -42,23 +43,70 @@ namespace SquidOps_AssetSquid.Views
             LoadDevices(); // Refresh after adding
         }
 
+        // Navigate to MainWindow
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
+            this.Close(); // Close this window.
+        }
+
+        // Navigate to ReportsView Window
+        private void Reports_Click(object sender, RoutedEventArgs e)
+        {
+            new ReportsView().Show();
             this.Close();
         }
 
+        // Navigate to LocationsView Window
         private void Locations_Click(object sender, RoutedEventArgs e)
         {
-            // new LocationsView().Show(); // Make sure this view exists
-            // this.Close();
-            MessageBox.Show("Locations navigation not yet implemented.");
+            new LocationsView().Show(); // Make sure this view exists
+            this.Close(); // Close current window
         }
 
+        // Navigate to PrivacyView Window
         private void Privacy_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Privacy Policy goes here.", "Privacy", MessageBoxButton.OK, MessageBoxImage.Information);
+            new PrivacyView().Show();
+            this.Close(); // Close current window
         }
 
+        private void EditDevice_Click(object sender, RoutedEventArgs e)
+        {
+            var device = (sender as Button)?.Tag as Device;
+            if (device == null) return;
+
+            var editWindow = new AddDeviceView(device); // Overload constructor for editing
+            editWindow.ShowDialog();
+            LoadDevices();
+        }
+
+        private void DeleteDevice_Click(object sender, RoutedEventArgs e)
+        {
+            var device = (sender as Button)?.Tag as Device;
+            if (device == null) return;
+
+            var result = MessageBox.Show($"Delete device {device.Name}?", "Confirm", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                _adapter.DeleteDeviceById(device.DeviceId);
+                LoadDevices();
+            }
+        }
+
+        private void GenerateQR_Click(object sender, RoutedEventArgs e)
+        {
+            // Ensure a device is selected
+            if (DeviceGrid.SelectedItem is Device selectedDevice)
+            {
+                // Open the QRCodeView and pass the device
+                var qrWindow = new QRCodeView(selectedDevice);
+                qrWindow.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Please select a device to generate a QR code.", "No Device Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

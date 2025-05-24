@@ -9,19 +9,18 @@ using Dapper;
 namespace SquidOps_AssetSquid.Models
 {
     /// <summary>
-    /// Class that represents Devices.
+    /// Class to represent a report
     /// </summary>
-    public class Device
+    public class DeviceReportViewModel
     {
         public int DeviceId { get; set; }
-        public string Name { get; set; }
+        public string DeviceName { get; set; }
         public string SerialNumber { get; set; }
         public string IpAddress { get; set; }
         public string MacAddress { get; set; }
         public string DeviceModel { get; set; }
-        public string LocationName { get; set; }
         public string DeviceTypeName { get; set; }
-        public int LocationId { get; set; }
-        public int DeviceTypeId { get; set; }
+        public string LocationName { get; set; }
+        public int TotalDevices { get; set; }
     }
 }

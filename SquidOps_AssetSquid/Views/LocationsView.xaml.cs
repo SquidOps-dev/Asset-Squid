@@ -52,7 +52,11 @@ namespace SquidOps_AssetSquid.Views
             menu.Show();
             this.Close();
         }
-
+        private void GoToReports_Click(object sender, RoutedEventArgs e)
+        {
+            new ReportsView().Show();
+            this.Close();
+        }
         private void GoToDevices_Click(object sender, RoutedEventArgs e)
         {
             var devices = new DevicesView();
@@ -62,8 +66,8 @@ namespace SquidOps_AssetSquid.Views
 
         private void GoToPrivacy_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Redirect to Privacy window or modal.");
-            // TODO: Implement Privacy window if needed
+            new PrivacyView().Show();
+            this.Close();
         }
     }
 }

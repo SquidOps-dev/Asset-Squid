@@ -20,23 +20,27 @@ namespace SquidOps_AssetSquid
         public MainWindow()
         {
             InitializeComponent();
-            //MainFrame.Navigate(new Views.DevicesView());
-
         }
-
+        private void ViewReports_Click(object sender, RoutedEventArgs e)
+        {
+            var reportsView = new ReportsView();
+            reportsView.Owner = this;
+            reportsView.ShowDialog();
+            this.Close();
+        }
         private void ViewDevices_Click(object sender, RoutedEventArgs e)
         {
             var devicesView = new DevicesView();
-            devicesView.Owner = this; // Optional: center it relative to main window
+            devicesView.Owner = this;
             devicesView.ShowDialog();
             this.Close();
         }
 
         private void ViewLocations_Click(object sender, RoutedEventArgs e)
         {
-            var devicesView = new LocationsView();
-            devicesView.Owner = this; // Optional: center it relative to main window
-            devicesView.ShowDialog();
+            var locationsView = new LocationsView();
+            locationsView.Owner = this;
+            locationsView.ShowDialog();
             this.Close();
         }
     }

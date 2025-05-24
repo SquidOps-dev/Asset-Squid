@@ -10,39 +10,49 @@
     <Grid Margin="30">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Navigation -->
+            <!-- Nav -->
             <RowDefinition Height="Auto"/>
-            <!-- Title + Button -->
+            <!-- Title -->
+            <RowDefinition Height="Auto"/>
+            <!-- New Location -->
             <RowDefinition Height="*"/>
             <!-- Table -->
         </Grid.RowDefinitions>
 
-        <!-- Navigation Bar -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,20">
-            <Button Content="Menu" Click="GoToMenu_Click" Style="{StaticResource NavButtonStyle}" />
-            <Button Content="Devices" Click="GoToDevices_Click" Style="{StaticResource NavButtonStyle}" />
-            <Button Content="Privacy" Click="GoToPrivacy_Click" Style="{StaticResource NavButtonStyle}" />
+        <!-- Navigation Menu -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+            <Button Content="Menu" Margin="5,0" Padding="10,4" Click="GoToMenu_Click"
+                    Background="Transparent" BorderBrush="Transparent" Foreground="White" Cursor="Hand"/>
+            <Button Content="Devices" Margin="5,0" Padding="10,4" Click="GoToDevices_Click"
+                    Background="Transparent" BorderBrush="Transparent" Foreground="White" Cursor="Hand"/>
+            <Button Content="Reports" Margin="5,0" Padding="10,4" Click="GoToReports_Click"
+                    Background="Transparent" BorderBrush="Transparent" Foreground="White" Cursor="Hand"/>
+            <Button Content="Privacy" Margin="5,0" Padding="10,4" Click="GoToPrivacy_Click"
+                    Background="Transparent" BorderBrush="Transparent" Foreground="White" Cursor="Hand"/>
         </StackPanel>
 
-        <!-- Title + Button -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,0,20">
-            <TextBlock Text="All Locations"
-                       FontSize="28"
-                       FontWeight="Bold"
-                       Foreground="White"
-                       VerticalAlignment="Center"
-                       Margin="0,0,20,0"/>
-            <Button Content="+ New Location"
-                    Width="140"
-                    Height="36"
-                    Background="#1f8ea3"
-                    Foreground="White"
-                    FontWeight="Bold"
-                    Click="AddLocation_Click"/>
-        </StackPanel>
+        <!-- Page Title -->
+        <TextBlock Text="All Locations"
+                   Grid.Row="1"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="White"
+                   Margin="0,0,0,15" />
 
-        <!-- Locations Table -->
-        <Border Grid.Row="2"
+        <!-- New Location Button -->
+        <Button Content="+ New Location"
+                Grid.Row="2"
+                Width="140"
+                Height="36"
+                Margin="0,0,0,20"
+                Background="#1f8ea3"
+                Foreground="White"
+                FontWeight="Bold"
+                HorizontalAlignment="Left"
+                Click="AddLocation_Click"/>
+
+        <!-- Locations Table with Cyan Border -->
+        <Border Grid.Row="3"
                 BorderBrush="#26d9fd"
                 BorderThickness="2"
                 CornerRadius="12"
@@ -51,18 +61,18 @@
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
                       IsReadOnly="True"
-                      AlternatingRowBackground="#1e1e1e"
-                      RowBackground="#2a2a2a"
+                      AlternatingRowBackground="#1b1b1b"
+                      RowBackground="Gray"
                       GridLinesVisibility="Horizontal"
                       BorderThickness="0"
-                      Foreground="White"
+                      HeadersVisibility="Column"
                       FontSize="14"
                       RowHeight="32"
-                      ColumnHeaderHeight="36">
+                      ColumnHeaderHeight="36"
+                      Foreground="Black"
+                      Background="Black">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
-                    <DataGridTextColumn Header="Room Number" Binding="{Binding RoomNumber}" Width="*" />
-                    <DataGridTextColumn Header="Building" Binding="{Binding Building}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

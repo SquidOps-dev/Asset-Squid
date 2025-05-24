@@ -34,10 +34,11 @@
                     <Button Content="View Locations" Width="200" Height="60" Margin="10"
                 Background="#1c1c1e" Foreground="#f0f0f0" FontSize="18"
                 BorderBrush="#444" BorderThickness="1" 
-                            Click="ViewDevices_Click" />
+                            Click="ViewLocations_Click" />
 
                     <Button Content="Reports" Width="200" Height="60" Margin="10"
-                Background="#2f8540" Foreground="White" FontSize="18" BorderThickness="0" />
+                Background="#2f8540" Foreground="White" FontSize="18" BorderThickness="0" 
+                            Click="ViewReports_Click" />
                 </StackPanel>
             </StackPanel>
 

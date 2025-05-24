@@ -1,7 +1,5 @@
 ﻿using QRCoder;
 using SquidOps_AssetSquid.Models;
-using System;
-using System.Printing;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -10,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Documents;
 
 namespace SquidOps_AssetSquid.Views
 {

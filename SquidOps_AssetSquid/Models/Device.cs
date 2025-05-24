@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
-using Dapper;
-
-namespace SquidOps_AssetSquid.Models
+﻿namespace SquidOps_AssetSquid.Models
 {
     /// <summary>
     /// Class that represents Devices.

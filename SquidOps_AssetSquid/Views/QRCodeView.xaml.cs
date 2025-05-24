@@ -13,69 +13,96 @@ namespace SquidOps_AssetSquid.Views
 {
     public partial class QRCodeView : Window
     {
+        // Constructor: receives a Device object and builds the QR code display
         public QRCodeView(Device device)
         {
-            InitializeComponent();
+            InitializeComponent(); // Load XAML UI elements
 
-            string qrText = $"Name: {device.Name}\nIP: {device.IpAddress}\nSN: {device.SerialNumber}\nMAC: {device.MacAddress}\nModel: {device.DeviceModel}";
+            // Combine key device properties into the QR payload text
+            string qrText =
+                $"Name: {device.Name}\n" +
+                $"IP: {device.IpAddress}\n" +
+                $"SN: {device.SerialNumber}\n" +
+                $"MAC: {device.MacAddress}\n" +
+                $"Model: {device.DeviceModel}";
 
+            // Create the QR code data with ECC level Q for high error tolerance
             using var qrGenerator = new QRCodeGenerator();
             using var qrData = qrGenerator.CreateQrCode(qrText, QRCodeGenerator.ECCLevel.Q);
-            var qrCode = new QRCode(qrData);
+            var qrCode = new QRCode(qrData); // Wrap data into a QRCode object
 
+            // Render the QR code graphic to a bitmap at module size 20
             using Bitmap qrBitmap = qrCode.GetGraphic(20);
             using var stream = new MemoryStream();
-            qrBitmap.Save(stream, ImageFormat.Png);
-            stream.Seek(0, SeekOrigin.Begin);
+            qrBitmap.Save(stream, ImageFormat.Png); // Export as PNG
+            stream.Seek(0, SeekOrigin.Begin); // Reset stream position for reading
 
+            // Load the PNG from memory into a WPF-friendly BitmapImage
             var bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
             bitmapImage.StreamSource = stream;
-            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad; // Ensure it stays valid after stream closes
             bitmapImage.EndInit();
 
+            // Assign the generated BitmapImage to the Image control in the UI
             QrImage.Source = bitmapImage;
         }
 
+        // Print button click: wraps the QrImage control in a Visual and sends it to the printer
         private void Print_Click(object sender, RoutedEventArgs e)
         {
-            PrintDialog printDialog = new PrintDialog();
-
+            var printDialog = new PrintDialog();
             if (printDialog.ShowDialog() == true)
             {
-                // Create a VisualBrush of the QR code image
-                DrawingVisual visual = new DrawingVisual();
-                using (DrawingContext dc = visual.RenderOpen())
+                // Create a visual brush of the QrImage control
+                var visual = new DrawingVisual();
+                using (var dc = visual.RenderOpen())
                 {
-                    VisualBrush brush = new VisualBrush(QrImage);
-                    dc.DrawRectangle(brush, null, new Rect(new System.Windows.Point(), new System.Windows.Size(QrImage.ActualWidth, QrImage.ActualHeight)));
+                    var brush = new VisualBrush(QrImage);
+                    // Draw the rectangle using the full size of the QR image
+                    dc.DrawRectangle(
+                        brush,
+                        null,
+                        new Rect(
+                            new System.Windows.Point(),
+                            new System.Windows.Size(QrImage.ActualWidth, QrImage.ActualHeight)
+                        )
+                    );
                 }
 
-                // Print the visual
+                // Send the composed visual to the printer with description "QR Code"
                 printDialog.PrintVisual(visual, "QR Code");
             }
         }
 
+        // Minimize icon click: minimize this window
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
 
+        // Maximize icon click: toggle between maximized and normal sizes
         private void Maximize_Click(object sender, RoutedEventArgs e)
         {
-            this.WindowState = (this.WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
+            this.WindowState =
+                this.WindowState == WindowState.Maximized
+                ? WindowState.Normal
+                : WindowState.Maximized;
         }
 
+        // Close icon click: close this window
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        // Title bar drag: allow the user to move the window when dragging the title area
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            {
+                this.DragMove(); // Initiate window drag
+            }
         }
-
     }
 }

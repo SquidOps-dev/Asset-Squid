@@ -11,32 +11,32 @@ namespace SquidOps_AssetSquid.Views
         {
             InitializeComponent();
         }
-        // Go Back to Menu
+        
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show();
-            this.Close();
+            new MainWindow().Show(); // Navigate to MainWindow
+            this.Close(); // Close current window
         }
 
         // Navigate to DevicesView
         private void Devices_Click(object sender, RoutedEventArgs e)
         {
-            new DevicesView().Show();
-            this.Close();
+            new DevicesView().Show(); // Navigate to DeviceView window
+            this.Close(); // Then close this window
         }
 
         //Navigate to LocationsView
         private void Locations_Click(object sender, RoutedEventArgs e)
         {
-            new LocationsView().Show();
-            this.Close();
+            new LocationsView().Show(); // Navigate to LocationsView
+            this.Close(); // Then close current window
         }
 
         // Navigation to ReportsView
         private void Reports_Click(object sender, RoutedEventArgs e)
         {
-            new ReportsView().Show();
-            this.Close();
+            new ReportsView().Show(); // Navigate to ReportsView
+            this.Close(); // Close current window
         }
 
     }

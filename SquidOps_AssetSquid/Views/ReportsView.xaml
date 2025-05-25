@@ -43,7 +43,7 @@
                    Grid.Row="1"
                    FontSize="28"
                    FontWeight="Bold"
-                   Foreground="White"
+                   Foreground="#FFFCFCFC"
                    Margin="0,0,0,15" />
 
         <!-- Filters -->
@@ -67,8 +67,7 @@
              Foreground="Gray"
              Text="Search devices..."
              GotFocus="SearchBox_GotFocus"
-             LostFocus="SearchBox_LostFocus"
-             TextChanged="SearchBox_TextChanged"/>
+             LostFocus="SearchBox_LostFocus"/>
 
             <Button Content="Search" Width="80" Click="Search_Click"
             Background="#1f8ea3" Foreground="White"/>
@@ -81,7 +80,7 @@
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
                       IsReadOnly="True"
-                      AlternatingRowBackground="#1b1b1b"
+                      AlternatingRowBackground="SlateGray"
                       RowBackground="Gray"
                       GridLinesVisibility="Horizontal"
                       BorderThickness="0"
@@ -102,5 +101,10 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
+        <Button x:Name="Print_Button" Content="Print" 
+                Background="Black" Foreground="#FFFF00FC"
+                HorizontalAlignment="Left" Margin="889,0,0,15" 
+                Grid.Row="2" Height="22" VerticalAlignment="Bottom"
+                RenderTransformOrigin="0.454,-0.521" Width="41" BorderBrush="Black" FontSize="14" Click="Print_Click"/>
     </Grid>
 </Window>

@@ -61,7 +61,7 @@
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
                       IsReadOnly="True"
-                      AlternatingRowBackground="#1b1b1b"
+                      AlternatingRowBackground="SlateGray"
                       RowBackground="Gray"
                       GridLinesVisibility="Horizontal"
                       BorderThickness="0"

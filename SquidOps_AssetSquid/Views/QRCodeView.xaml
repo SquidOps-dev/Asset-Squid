@@ -7,7 +7,8 @@
         Background="Black"
         ResizeMode="CanResize"
         WindowStyle="None"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        Icon="../Assets/favicon.ico">
 
     <Border Background="Black" BorderBrush="#26d9fd" BorderThickness="2" CornerRadius="10">
         <Grid>

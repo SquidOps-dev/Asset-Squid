@@ -5,7 +5,8 @@
         Height="600" Width="942"
         WindowStartupLocation="CenterScreen"
         Background="Black"
-        ResizeMode="CanResize">
+        ResizeMode="CanResize"
+        Icon="../Assets/favicon.ico">
 
     <Grid Margin="30">
         <Grid.ColumnDefinitions>

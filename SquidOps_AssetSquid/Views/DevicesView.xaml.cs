@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using SquidOps_AssetSquid.Models;
 using SquidOps_AssetSquid.DAL;
+using SquidOps_AssetSquid.Extensions;
 
 namespace SquidOps_AssetSquid.Views
 {
@@ -54,8 +55,8 @@ namespace SquidOps_AssetSquid.Views
         /// </summary>
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show();
-            this.Close(); // Close the current DevicesView
+            this.NavigateTo(new MainWindow());
+            this.Close();
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace SquidOps_AssetSquid.Views
         /// </summary>
         private void Reports_Click(object sender, RoutedEventArgs e)
         {
-            new ReportsView().Show();
+            this.NavigateTo(new ReportsView());
             this.Close();
         }
 
@@ -72,7 +73,7 @@ namespace SquidOps_AssetSquid.Views
         /// </summary>
         private void Locations_Click(object sender, RoutedEventArgs e)
         {
-            new LocationsView().Show();
+            this.NavigateTo(new LocationsView());
             this.Close();
         }
 
@@ -81,7 +82,7 @@ namespace SquidOps_AssetSquid.Views
         /// </summary>
         private void Privacy_Click(object sender, RoutedEventArgs e)
         {
-            new PrivacyView().Show();
+            this.NavigateTo(new PrivacyView());
             this.Close();
         }
 

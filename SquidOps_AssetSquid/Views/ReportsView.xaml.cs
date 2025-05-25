@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Documents;
 using SquidOps_AssetSquid.DAL;
 using SquidOps_AssetSquid.Models;
+using SquidOps_AssetSquid.Extensions;
 
 namespace SquidOps_AssetSquid.Views
 {
@@ -87,10 +88,23 @@ namespace SquidOps_AssetSquid.Views
             }
         }
 
-        private void Menu_Click(object sender, RoutedEventArgs e) { new MainWindow().Show(); this.Close(); }
-        private void Devices_Click(object sender, RoutedEventArgs e) { new DevicesView().Show(); this.Close(); }
-        private void Locations_Click(object sender, RoutedEventArgs e) { new LocationsView().Show(); this.Close(); }
-        private void Privacy_Click(object sender, RoutedEventArgs e) { new PrivacyView().Show(); this.Close(); }
+        private void Menu_Click(object sender, RoutedEventArgs e) 
+        {
+            this.NavigateTo(new MainWindow());
+        }
+        private void Devices_Click(object sender, RoutedEventArgs e) 
+        {
+            this.NavigateTo(new DevicesView());
+
+        }
+        private void Locations_Click(object sender, RoutedEventArgs e) 
+        {
+            this.NavigateTo(new LocationsView());
+        }
+        private void Privacy_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigateTo(new PrivacyView());
+        }
 
         private void Print_Click(object sender, RoutedEventArgs e)
         {

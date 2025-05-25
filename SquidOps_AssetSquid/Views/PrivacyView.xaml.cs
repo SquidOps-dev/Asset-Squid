@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using SquidOps_AssetSquid.Extensions;
 
 namespace SquidOps_AssetSquid.Views
 {
@@ -14,29 +15,29 @@ namespace SquidOps_AssetSquid.Views
         
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Show(); // Navigate to MainWindow
-            this.Close(); // Close current window
+            this.NavigateTo(new MainWindow());
+            this.Close();
         }
 
         // Navigate to DevicesView
         private void Devices_Click(object sender, RoutedEventArgs e)
         {
-            new DevicesView().Show(); // Navigate to DeviceView window
-            this.Close(); // Then close this window
+            this.NavigateTo(new DevicesView());
+            this.Close();
         }
 
         //Navigate to LocationsView
         private void Locations_Click(object sender, RoutedEventArgs e)
         {
-            new LocationsView().Show(); // Navigate to LocationsView
-            this.Close(); // Then close current window
+            this.NavigateTo(new LocationsView());
+            this.Close();
         }
 
         // Navigation to ReportsView
         private void Reports_Click(object sender, RoutedEventArgs e)
         {
-            new ReportsView().Show(); // Navigate to ReportsView
-            this.Close(); // Close current window
+            this.NavigateTo(new ReportsView());
+            this.Close();
         }
 
     }

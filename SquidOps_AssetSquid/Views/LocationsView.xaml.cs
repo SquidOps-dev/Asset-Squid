@@ -1,8 +1,11 @@
 ﻿using System.Windows;
 using SquidOps_AssetSquid.DAL;
 using SquidOps_AssetSquid.Models;
+using SquidOps_AssetSquid.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+
+
 
 namespace SquidOps_AssetSquid.Views
 {
@@ -60,9 +63,8 @@ namespace SquidOps_AssetSquid.Views
         /// </summary>
         private void GoToMenu_Click(object sender, RoutedEventArgs e)
         {
-            var menu = new MainWindow();
-            menu.Show();
-            this.Close(); // Close the current view
+            this.NavigateTo(new MainWindow());
+            this.Close();
         }
 
         /// <summary>
@@ -70,7 +72,7 @@ namespace SquidOps_AssetSquid.Views
         /// </summary>
         private void GoToReports_Click(object sender, RoutedEventArgs e)
         {
-            new ReportsView().Show();
+            this.NavigateTo(new ReportsView());
             this.Close();
         }
 
@@ -79,8 +81,7 @@ namespace SquidOps_AssetSquid.Views
         /// </summary>
         private void GoToDevices_Click(object sender, RoutedEventArgs e)
         {
-            var devices = new DevicesView();
-            devices.Show();
+            this.NavigateTo(new DevicesView());
             this.Close();
         }
 
@@ -89,7 +90,7 @@ namespace SquidOps_AssetSquid.Views
         /// </summary>
         private void GoToPrivacy_Click(object sender, RoutedEventArgs e)
         {
-            new PrivacyView().Show();
+            this.NavigateTo(new PrivacyView());
             this.Close();
         }
     }

@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SquidOps_AssetSquid.Views;
+using SquidOps_AssetSquid.Extensions;
 
 namespace SquidOps_AssetSquid
 {
@@ -23,24 +24,18 @@ namespace SquidOps_AssetSquid
         }
         private void ViewReports_Click(object sender, RoutedEventArgs e)
         {
-            var reportsView = new ReportsView();
-            reportsView.Owner = this;
-            reportsView.ShowDialog();
+            this.NavigateTo(new ReportsView());
             this.Close();
         }
         private void ViewDevices_Click(object sender, RoutedEventArgs e)
         {
-            var devicesView = new DevicesView();
-            devicesView.Owner = this;
-            devicesView.ShowDialog();
+            this.NavigateTo(new DevicesView());
             this.Close();
         }
 
         private void ViewLocations_Click(object sender, RoutedEventArgs e)
         {
-            var locationsView = new LocationsView();
-            locationsView.Owner = this;
-            locationsView.ShowDialog();
+            this.NavigateTo(new LocationsView());
             this.Close();
         }
     }

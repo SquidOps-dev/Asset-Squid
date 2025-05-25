@@ -5,7 +5,8 @@
         Height="250" Width="400"
         WindowStartupLocation="CenterScreen"
         Background="Black"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Icon="../Assets/favicon.ico">
 
     <Grid Margin="30">
         <Grid.RowDefinitions>

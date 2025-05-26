@@ -1,121 +1,124 @@
-# Asset Squid
+# SquidOps Asset Manager
 
-Asset Squid is a modern, WPF-based IT asset management desktop application written in C#. It provides a flexible, scalable solution to track hardware, software, locations, and lifecycles of company assets—complete with QR-code tagging, customizable alerts, and full audit trails.
+![.NET 8.0](https://img.shields.io/badge/.NET-8.0-Informational?logo=.net\&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen)
+
+A modern, WPF-based desktop application to organize IT assets, generate reports, and print QR code labels via Brother PT-P710BT.
 
 ---
 
-## Table of Contents
+## 📑 Table of Contents
 
+* [Overview](#overview)
 * [Features](#features)
-* [Requirements](#requirements)
 * [Getting Started](#getting-started)
 
-  * [Clone the Repository](#clone-the-repository)
-  * [Install Dependencies](#install-dependencies)
-  * [Configure Application](#configure-application)
-  * [Build & Run](#build--run)
+  * [Prerequisites](#prerequisites)
+  * [Clone & Run](#clone--run)
 * [Usage](#usage)
-* [Configuration](#configuration)
-* [Extending the API](#extending-the-api)
 * [Contributing](#contributing)
+* [TODO](#todo)
 * [License](#license)
 
 ---
 
-## Features
+## 📝 Overview
 
-* **Centralized Asset Repository**: Add, view, and manage all hardware, software, and peripherals in one place.
-* **QR-Code Labeling**: Generate and print QR-code tags for assets for fast scanning.
-* **Assignment & Checkout**: Assign assets to users or departments, record history, and set due dates.
-* **Maintenance & Warranty Alerts**: Schedule notifications for upcoming maintenance windows and warranty expirations.
-* **Custom Fields**: Define locations, device types, departments, and more via dropdown selectors.
-* **Full Audit Trail**: Log every change with timestamps and user details.
-* **Reporting**: Generate on-demand reports and export data to CSV or PDF.
+SquidOps Asset Manager provides:
 
-## Requirements
+* Centralized **Device** & **Location** CRUD operations
+* Filterable, printable **Reports** with DataGrid
+* Automatic **QR Code** generation and label printing
+* Local **SQLite** storage with **Backup & Restore**
+* Persistent window layout across views
+* Consistent, global **Menu Bar** for common tasks
 
-* Windows 10 or later
-* Visual Studio 2022 (or newer) with .NET Desktop Development workload
-* .NET 6.0 SDK (or newer)
-* SQLite database engine (bundled via NuGet package)
+Designed for small IT teams to streamline asset tracking and labeling workflows.
 
-## Getting Started
+---
 
-### Clone the Repository
+## 🚀 Features
+
+* **Device Management**: Add, edit, and remove devices with detailed properties
+* **Location Management**: Inline location creation and filtering
+* **Reporting**: Build & print customizable device reports
+* **QR Label Printing**: Generate scannable QR labels on a PT-P710BT
+* **Data Persistence**: SQLite database (`inventory.db`) in-app
+* **Backup & Restore**: One-click database export/import
+* **Window State**: Remember last size, position, and monitor
+* **Unified Menu**: File ▶ Backup/Restore/Print/Exit; Settings; Help
+
+---
+
+## 🛠 Getting Started
+
+### Prerequisites
+
+* **Windows 10/11 (x64)**
+* **.NET 8.0 Runtime** (or SDK for development)
+* **Brother P-Touch Editor 6 SDK** (for label printing COM interop)
+* **Visual Studio 2022+** (optional, for source development)
+
+### Clone & Run
 
 ```bash
-git clone https://github.com/YourOrg/AssetSquid.git
-cd AssetSquid
+# Clone the repository
+git clone https://github.com/YourCompany/SquidOps_AssetSquid.git
+cd SquidOps_AssetSquid
+
+# Restore, build, and run
+dotnet restore
+dotnet build
+dotnet run --project SquidOps_AssetSquid.csproj
 ```
 
-### Install Dependencies
+Alternatively, publish a release build and run the standalone EXE:
 
-* Restore NuGet packages:
+```bash
+dotnet publish -c Release -r win-x64 --self-contained false -o publish
+cd publish
+./SquidOps_AssetSquid.exe
+```
 
-  1. Open the solution in Visual Studio.
-  2. Right-click the solution in Solution Explorer and select **Restore NuGet Packages**.
+---
 
-* Required packages:
+## 💡 Usage
 
-  * [Dapper](https://www.nuget.org/packages/Dapper)
-  * [Microsoft.Data.Sqlite](https://www.nuget.org/packages/Microsoft.Data.Sqlite)
-  * QR-code generation/printing library of your choice
+1. **Launch** the app and use the top **File** menu for Backup, Restore, and Print (in Reports view).
+2. **Navigate** between Devices, Locations, Reports, and Settings via the unified menu bar.
+3. **Manage** devices and locations, generate reports, and print QR labels directly to your Brother PT-P710BT.
 
-### Configure Application
+---
 
-1. Copy `appsettings.example.json` to `appsettings.json`.
-2. Open `appsettings.json` and update the `ConnectionString` under `Database`:
+## 🤝 Contributing
 
-   ```json
-   "Database": {
-     "ConnectionString": "Data Source=assets.db;"
-   }
-   ```
-3. (Optional) Create `appsettings.local.json` for developer-specific overrides. This file is ignored by Git.
+We welcome contributions! To get started:
 
-### Build & Run
+1. **Fork** the repository on GitHub
+2. **Clone** your fork and create a feature branch
+3. **Commit** your changes with clear messages
+4. **Push** and open a **Pull Request** against `main`
 
-1. In Visual Studio, set **AssetSquid** as the startup project.
-2. Press **F5** or click **Debug > Start Debugging**.
-3. The WPF client window will launch—log in with your credentials and get started!
+Please include tests and update documentation as needed.
 
-## Usage
+---
 
-* **Add Asset**: Click **New Asset**, fill in details, print QR tag, and save.
-* **Search & Filter**: Use the search bar or dropdown filters (location, type, department).
-* **Check-Out / Check-In**: Select an asset and click **Check-Out**; enter user and due date.
-* **Alerts**: View upcoming maintenance and warranty alerts in the **Notifications** panel.
-* **Reports**: Go to **Reports** menu to export data.
+## ✏️ TODO
 
-## Configuration
+* Implement **Preferences** dialog for user settings
+* Add **CSV import/export** for bulk data
+* Create an **installer** (MSIX/InnoSetup)
+* Develop **unit & integration tests**
+* Enhance **logging** and error reporting
+* Support **localization** & accessibility improvements
 
-| Setting                     | Description                      | Location           |
-| --------------------------- | -------------------------------- | ------------------ |
-| `Database:ConnectionString` | Path to SQLite database file     | `appsettings.json` |
-| `Alerts:ReminderDays`       | Days before expiration to notify | `appsettings.json` |
-| `QRCode:OutputFolder`       | Folder for generated QR images   | `appsettings.json` |
+---
 
-## Extending the API
+## 📄 License
 
-The backend exposes a RESTful API for external integration:
+This project is licensed under the **MIT License**. See [LICENSE.md](LICENSE.md) for details.
 
-* **GET** `/api/assets` – List all assets
-* **POST** `/api/assets` – Create new asset
-* **PUT** `/api/assets/{id}` – Update asset
-* **DELETE** `/api/assets/{id}` – Remove asset
+---
 
-Refer to [API\_DOCUMENTATION.md](docs/API_DOCUMENTATION.md) for full details.
+*© 2025 YourCompany*
 
-## Contributing
-
-1. Fork the repository.
-2. Create a feature branch: `git checkout -b feature/MyNewFeature`
-3. Commit your changes: `git commit -m 'Add new feature'`
-4. Push to the branch: `git push origin feature/MyNewFeature`
-5. Open a Pull Request.
-
-Please follow the existing code style and include unit tests where applicable.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).

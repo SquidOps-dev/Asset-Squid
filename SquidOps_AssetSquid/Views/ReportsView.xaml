@@ -1,6 +1,7 @@
 ﻿<Window x:Class="SquidOps_AssetSquid.Views.ReportsView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:uc="clr-namespace:SquidOps_AssetSquid.UserControls"
         Title="Reports"
         Height="600" Width="1000"
         WindowStartupLocation="CenterScreen"
@@ -8,7 +9,10 @@
         ResizeMode="CanResize"
         Icon="../Assets/favicon.ico">
 
-    <Grid Margin="30">
+    <DockPanel>
+        <uc:AppMenu DockPanel.Dock="Top"/>
+
+        <Grid Margin="30">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <!-- Navigation -->
@@ -108,4 +112,5 @@
                 Grid.Row="2" Height="22" VerticalAlignment="Bottom"
                 RenderTransformOrigin="0.454,-0.521" Width="41" BorderBrush="Black" FontSize="14" Click="Print_Click"/>
     </Grid>
+    </DockPanel>
 </Window>

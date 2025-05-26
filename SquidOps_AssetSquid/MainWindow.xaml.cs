@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SquidOps_AssetSquid.Views;
 using SquidOps_AssetSquid.Extensions;
+using SquidOps_AssetSquid.UserControls;
 
 namespace SquidOps_AssetSquid
 {

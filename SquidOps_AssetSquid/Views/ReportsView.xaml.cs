@@ -106,7 +106,7 @@ namespace SquidOps_AssetSquid.Views
             this.NavigateTo(new PrivacyView());
         }
 
-        private void Print_Click(object sender, RoutedEventArgs e)
+        public void Print_Click(object sender, RoutedEventArgs e)
         {
             // 1) Show the standard Print dialog
             var dlg = new PrintDialog();

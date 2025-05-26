@@ -1,12 +1,17 @@
 ﻿<Window x:Class="SquidOps_AssetSquid.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:uc="clr-namespace:SquidOps_AssetSquid.UserControls"
         Title="SquidOps Asset Manager"
         Height="600" Width="900"
         WindowStartupLocation="CenterScreen"
         Background="Black"
         Icon="Assets/favicon.ico">
-    <Grid>
+
+    <DockPanel>
+        <uc:AppMenu DockPanel.Dock="Top"/>
+        
+        <Grid>
         <Border CornerRadius="16" Background="#111" Padding="30" Margin="80"
                 BorderBrush="#26d9fd" BorderThickness="2"
                 VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -43,5 +48,8 @@
             </StackPanel>
 
         </Border>
+            
     </Grid>
+        
+  </DockPanel>
 </Window>

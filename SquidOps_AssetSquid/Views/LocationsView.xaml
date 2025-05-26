@@ -1,6 +1,7 @@
 ﻿<Window x:Class="SquidOps_AssetSquid.Views.LocationsView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:uc="clr-namespace:SquidOps_AssetSquid.UserControls"
         Title="Locations"
         Height="600" Width="1000"
         WindowStartupLocation="CenterScreen"
@@ -8,7 +9,10 @@
         ResizeMode="CanResize"
         Icon="../Assets/favicon.ico">
 
-    <Grid Margin="30">
+    <DockPanel>
+        <uc:AppMenu DockPanel.Dock="Top"/>
+
+        <Grid Margin="30">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <!-- Nav -->
@@ -78,4 +82,5 @@
             </DataGrid>
         </Border>
     </Grid>
+    </DockPanel>
 </Window>

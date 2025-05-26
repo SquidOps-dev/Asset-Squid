@@ -63,7 +63,7 @@ Designed for small IT teams to streamline asset tracking and labeling workflows.
 
 ```bash
 # Clone the repository
-git clone https://github.com/YourCompany/SquidOps_AssetSquid.git
+git clone https://github.com/SquidOps-dev/AssetSquid.git
 cd SquidOps_AssetSquid
 
 # Restore, build, and run
@@ -120,5 +120,5 @@ This project is licensed under the **MIT License**. See [LICENSE.md](LICENSE.md)
 
 ---
 
-*© 2025 YourCompany*
+*© 2025 SquidOps-dev*
 

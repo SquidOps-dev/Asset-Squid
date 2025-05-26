@@ -39,12 +39,12 @@
 			<!-- now points to the copy inside your solution -->
 			<HintPath>..\Libs\Interop.bpac.dll</HintPath>
 			<EmbedInteropTypes>False</EmbedInteropTypes>
-			<!-- Copy local = true so it ends up next to your EXE -->
+			<!-- Copy local = true so it ends up next to the EXE -->
 			<Private>True</Private>
 		</Reference>
 
 		<!-- also include the raw DLL so VS will copy it -->
-		<None Include="C:\Users\ch3dd\OneDrive\Desktop\Asset-Squid\SquidOps_AssetSquid\Libs\Interop.bpac.dll">
+		<None Include="Libs\Interop.bpac.dll">
 			<Link>Interop.bpac.dll</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>

@@ -15,6 +15,7 @@ namespace SquidOps_AssetSquid.Views
     {
         // Adapter for CRUD operations on Device entities
         private readonly DeviceAdapter _adapter;
+        private readonly LocationAdapter _locAdapter;
 
         /// <summary>
         /// Constructor: initializes UI components and loads devices into the grid
@@ -22,7 +23,6 @@ namespace SquidOps_AssetSquid.Views
         public DevicesView()
         {
             InitializeComponent(); // Load the XAML-defined UI
-
             _adapter = new DeviceAdapter(); // Instantiate the data adapter
             LoadDevices(); // Populate the DataGrid with device data
         }
@@ -33,7 +33,7 @@ namespace SquidOps_AssetSquid.Views
         private void LoadDevices()
         {
             // GetAll() returns IEnumerable<Device>; ToList() materializes it into a List<Device>
-            List<Device> devices = _adapter.GetAll().ToList();
+            List<Device> devices = _adapter.GetAllWithDetails().ToList();
             DeviceGrid.ItemsSource = devices; // Bind the list to the DataGrid
         }
 

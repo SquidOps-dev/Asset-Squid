@@ -93,5 +93,61 @@ namespace SquidOps_AssetSquid.Views
             this.NavigateTo(new PrivacyView());
             this.Close();
         }
+
+        /// <summary>
+        /// Called by AppMenu when “Edit Location” is selected.
+        /// </summary>
+        public void EditSelectedLocation()
+        {
+            if (LocationGrid.SelectedItem is Location loc)
+            {
+                // Use the new constructor overload
+                var dlg = new AddLocationView(loc) { Owner = this };
+                if (dlg.ShowDialog() == true)
+                    LoadLocations();  // refresh the grid
+            }
+            else
+            {
+                MessageBox.Show(
+                  "Please select a location to edit.",
+                  "No Selection",
+                  MessageBoxButton.OK,
+                  MessageBoxImage.Information);
+            }
+        }
+
+        /// <summary>
+        /// Called by AppMenu when “Delete Location” is selected.
+        /// </summary>
+        public void DeleteSelectedLocation()
+        {
+            if (LocationGrid.SelectedItem is Location l)
+            {
+                // Ask user to confirm deletion
+                var result = MessageBox.Show(
+                    $"Delete location: \"{l.Name}\"?",
+                    "Confirm Deletion",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                );
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Perform deletion and refresh
+                    _adapter.DeleteLocationById(l.LocationId);
+                    MessageBox.Show($"Location has been deleted");
+                    LoadLocations();
+                }
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Please select a location to delete.",
+                    "No location Selected",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@
 
 using Microsoft.Data.Sqlite;            // For SQLite backup API
 using Microsoft.Win32;                  // For file dialogs
+using SquidOps_AssetSquid.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;               // For launching external processes
@@ -26,7 +27,64 @@ namespace SquidOps_AssetSquid.UserControls
     /// </summary>
     public partial class AppMenu : UserControl
     {
-        public AppMenu() => InitializeComponent();  // Load the XAML-defined UI
+        // public AppMenu() => InitializeComponent();  // Load the XAML-defined UI <-- Uncomment if code non working
+
+        public AppMenu()
+        {
+            InitializeComponent(); // Load the XAML-defined UI
+
+            // When the menu loads, configure Print visibility and Device actions
+            this.Loaded += (s, e) =>
+            {
+                var win = Window.GetWindow(this);
+
+                // Show Print only in ReportsView
+                if (this.FindName("PrintMenuItem") is MenuItem printItem)
+                {
+                    printItem.Visibility = win is ReportsView
+                        ? Visibility.Visible
+                        : Visibility.Collapsed;
+                }
+
+                // Configure Device menu items if hosting DevicesView
+                if (win is DevicesView deviceView)
+                {
+                    // Locate DataGrid and wire selection changes
+                    var grid = deviceView.FindName("DeviceGrid") as DataGrid;
+                    if (grid != null)
+                    {
+                        UpdateDeviceMenuItems(grid.SelectedItem != null);
+                        grid.SelectionChanged += (gs, ge) =>
+                            UpdateDeviceMenuItems(grid.SelectedItem != null);
+                    }
+                }
+                else
+                {
+                    // Hide device-specific items in other views
+                    EditDeviceMenuItem.Visibility = Visibility.Collapsed;
+                    DeleteDeviceMenuItem.Visibility = Visibility.Collapsed;
+                    QRCodeMenuItem.Visibility = Visibility.Collapsed;
+                }
+
+                // === LocationsView: enable/disable Edit/Delete actions ===
+                if (win is LocationsView locationsView)
+                {
+                    var grid = locationsView.FindName("LocationGrid") as DataGrid;
+                    if (grid != null)
+                    {
+                        UpdateLocationMenuItems(grid.SelectedItem != null);
+                        grid.SelectionChanged += (gs, ge) =>
+                            UpdateLocationMenuItems(grid.SelectedItem != null);
+                    }
+                }
+                else
+                {
+                    // Hide location-specific items elsewhere
+                    EditLocationMenuItem.Visibility = Visibility.Collapsed;
+                    DeleteLocationMenuItem.Visibility = Visibility.Collapsed;
+                }
+            };
+        }
 
         // === File Menu Commands ===
 
@@ -131,6 +189,41 @@ namespace SquidOps_AssetSquid.UserControls
             }
         }
 
+        // === Edit, Delete, QR Code ===
+
+        // Delegate to DevicesView code
+        private void EditDeviceMenuItem_Click(object s, RoutedEventArgs e)
+        {
+            if (Window.GetWindow(this) is SquidOps_AssetSquid.Views.DevicesView dv)
+                dv.EditSelectedDevice();
+        }
+
+        private void DeleteDeviceMenuItem_Click(object s, RoutedEventArgs e)
+        {
+            if (Window.GetWindow(this) is SquidOps_AssetSquid.Views.DevicesView dv)
+                dv.DeleteSelectedDevice();
+        }
+
+        private void QRCodeMenuItem_Click(object s, RoutedEventArgs e)
+        {
+            if (Window.GetWindow(this) is SquidOps_AssetSquid.Views.DevicesView dv)
+                dv.ShowQRCodeForSelectedDevice();
+        }
+
+        // Delegate LocationsView code
+        private void EditLocationMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (Window.GetWindow(this) is LocationsView lv)
+                lv.EditSelectedLocation();
+        }
+
+        private void DeleteLocationMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (Window.GetWindow(this) is LocationsView lv)
+                lv.DeleteSelectedLocation();
+        }
+
+
         // === Exit Command ===
 
         /// <summary>
@@ -198,6 +291,27 @@ namespace SquidOps_AssetSquid.UserControls
                         "Email Support", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
-        }    
+        }
+
+        // === Helpers ===
+
+        /// <summary>
+        /// Toggles the enabled state of device-related menu items.
+        /// </summary>
+        private void UpdateDeviceMenuItems(bool isEnabled)
+        {
+            EditDeviceMenuItem.IsEnabled = isEnabled;
+            DeleteDeviceMenuItem.IsEnabled = isEnabled;
+            QRCodeMenuItem.IsEnabled = isEnabled;
+        }
+
+        /// <summary>
+        /// Toggles the enabled state of location-related menu items.
+        /// </summary>
+        private void UpdateLocationMenuItems(bool isEnabled)
+        {
+            EditLocationMenuItem.IsEnabled = isEnabled;
+            DeleteLocationMenuItem.IsEnabled = isEnabled;
+        }
     }
 }

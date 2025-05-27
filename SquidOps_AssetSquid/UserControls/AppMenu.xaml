@@ -6,6 +6,38 @@
         <MenuItem Header="_File">
             <MenuItem Header="_Backup Database"   Click="BackupDb_Click"/>
             <MenuItem Header="_Restore Database"  Click="RestoreDb_Click"/>
+            <Separator/>
+            
+            <!-- New device/location actions, disabled by default -->
+            
+            
+            <MenuItem x:Name="EditDeviceMenuItem" 
+            Header="Edit Device" 
+            Click="EditDeviceMenuItem_Click"
+            IsEnabled="False"/>
+            
+            <MenuItem x:Name="DeleteDeviceMenuItem" 
+            Header="Delete Device" 
+            Click="DeleteDeviceMenuItem_Click"
+            IsEnabled="False"/>
+            
+            <MenuItem x:Name="QRCodeMenuItem" 
+            Header="View QR Code" 
+            Click="QRCodeMenuItem_Click"
+            IsEnabled="False"/>
+
+            <MenuItem x:Name="EditLocationMenuItem" 
+            Header="Edit Location" 
+            Click="EditLocationMenuItem_Click"
+            IsEnabled="False"/>
+
+            <MenuItem x:Name="DeleteLocationMenuItem" 
+            Header="Delete Location" 
+            Click="DeleteLocationMenuItem_Click"
+            IsEnabled="False"/>
+
+            <!-- New addition -->
+            <Separator/>
             <MenuItem Header="_Print"             Click="Print_Click"/>
             <Separator/>
             <MenuItem Header="E_xit"              Click="Exit_Click"/>

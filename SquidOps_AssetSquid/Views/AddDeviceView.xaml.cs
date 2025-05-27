@@ -73,10 +73,49 @@ namespace SquidOps_AssetSquid.Views
         /// </summary>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            // Construct a Device object from form inputs
+            // Validate required fields
+
+            // Device name is mandatory
+            var name = NameBox.Text.Trim();
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show(
+                    "Please enter a device name.",
+                    "Validation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                NameBox.Focus();
+                return;
+            }
+
+            // Location must be selected
+            if (LocationCombo.SelectedValue == null)
+            {
+                MessageBox.Show(
+                    "Please select a location.",
+                    "Validation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                LocationCombo.Focus();
+                return;
+            }
+
+            // Device Type must be selected
+            if (TypeCombo.SelectedValue == null)
+            {
+                MessageBox.Show(
+                    "Please select a device type.",
+                    "Validation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                TypeCombo.Focus();
+                return;
+            }
+
+            // Construct the Device object
             var device = new Device
             {
-                Name = NameBox.Text.Trim(),
+                Name = name,
                 SerialNumber = SerialBox.Text.Trim(),
                 IpAddress = IpBox.Text.Trim(),
                 MacAddress = MacBox.Text.Trim(),
@@ -85,19 +124,29 @@ namespace SquidOps_AssetSquid.Views
                 DeviceTypeId = (int)TypeCombo.SelectedValue
             };
 
+            // Add vs. Edit
             if (_editingId.HasValue)
             {
-                device.DeviceId = _editingId.Value;             // Set ID for update
-                _deviceAdapter.UpdateDevice(device);             // Update existing device
-                MessageBox.Show("Device updated!");              // Notify user
+                device.DeviceId = _editingId.Value;                   // preserve ID
+                _deviceAdapter.UpdateDevice(device);                  // update existing
+                MessageBox.Show(
+                    "Device updated!",
+                    "Success",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
             }
             else
             {
-                _deviceAdapter.InsertDevice(device);             // Insert new device
-                MessageBox.Show("Device added!");                // Notify user
+                _deviceAdapter.InsertDevice(device);                  // insert new
+                MessageBox.Show(
+                    "Device added!",
+                    "Success",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
             }
 
-            this.Close();                                        // Close the window
+            // Close the dialog
+            this.Close();
         }
 
         /// <summary>

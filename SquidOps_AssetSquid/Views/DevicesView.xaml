@@ -87,7 +87,7 @@
                     <DataGridTextColumn Header="Location" Binding="{Binding LocationName}" Width="*" />
 
                     <!-- Actions column moved inside Columns -->
-                        <DataGridTemplateColumn Header="Actions" Width="SizeToCells" MinWidth="120">
+                    <!--    <DataGridTemplateColumn Header="Actions" Width="SizeToCells" MinWidth="120">
                             <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="4">
@@ -98,7 +98,7 @@
                                             Tag="{Binding}"
                                             Background="Transparent" 
                                             BorderThickness="0"
-                                            Foreground="Black"
+                                            Foreground="Blue"
                                             Cursor="Hand" 
                                             FontWeight="SemiBold"/>
                                         <Button 
@@ -108,7 +108,7 @@
                                             Tag="{Binding}"
                                             Background="Transparent"
                                             BorderThickness="0"
-                                            Foreground="Black"
+                                            Foreground="Blue"
                                             Cursor="Hand"
                                             FontWeight="SemiBold"/>
                                         <Button 
@@ -118,13 +118,13 @@
                                             Tag="{Binding}"
                                             Background="Transparent"
                                             BorderThickness="0"
-                                            Foreground="Black"
+                                            Foreground="Blue"
                                             Cursor="Hand"
                                             FontWeight="SemiBold"/>
                                 </StackPanel>
                             </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                        </DataGridTemplateColumn.CellTemplate> 
+                    </DataGridTemplateColumn> -->
                 </DataGrid.Columns>
             </DataGrid>
 

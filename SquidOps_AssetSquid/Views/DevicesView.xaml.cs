@@ -15,7 +15,6 @@ namespace SquidOps_AssetSquid.Views
     {
         // Adapter for CRUD operations on Device entities
         private readonly DeviceAdapter _adapter;
-        private readonly LocationAdapter _locAdapter;
 
         /// <summary>
         /// Constructor: initializes UI components and loads devices into the grid
@@ -146,5 +145,59 @@ namespace SquidOps_AssetSquid.Views
                 );
             }
         }
+        public void EditSelectedDevice()
+        {
+            if (DeviceGrid.SelectedItem is Device d)
+            {
+                var dlg = new AddDeviceView(d) { Owner = this };
+                dlg.ShowDialog();
+                LoadDevices();
+            }
+            else
+                MessageBox.Show("Please select a device to edit.");
+        }
+
+        public void DeleteSelectedDevice()
+        {
+            if (DeviceGrid.SelectedItem is Device d)
+            {
+                // Ask user to confirm deletion
+                var result = MessageBox.Show(
+                    $"Delete device \"{d.Name}\"?",
+                    "Confirm Deletion",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                );
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Perform deletion and refresh
+                    _adapter.DeleteDeviceById(d.DeviceId);
+                    MessageBox.Show($"Data for device: {d.Name} has been deleted");
+                    LoadDevices();
+                }
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Please select a device to delete.",
+                    "No Device Selected",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
+            }
+        }
+
+
+        public void ShowQRCodeForSelectedDevice()
+        {
+            if (DeviceGrid.SelectedItem is Device d)
+            {
+                new QRCodeView(d) { Owner = this }.ShowDialog();
+            }
+            else
+                MessageBox.Show("Please select a device to view its QR code.");
+        }
+
     }
 }

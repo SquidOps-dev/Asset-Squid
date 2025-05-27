@@ -12,6 +12,8 @@ namespace SquidOps_AssetSquid.Views
         // Adapter for CRUD operations on Location; consider injecting via constructor for better testability
         private readonly LocationAdapter _adapter = new LocationAdapter();
 
+        private readonly Location? _editingLocation;
+
         /// <summary>
         /// Initializes the window and data adapter
         /// </summary>
@@ -25,28 +27,53 @@ namespace SquidOps_AssetSquid.Views
         }
 
         /// <summary>
+        /// Opens the dialog in “Edit” mode, pre-populating fields.
+        /// </summary>
+        public AddLocationView(Location existing) : this()
+        {
+            _editingLocation = existing;
+
+            // Change the window title so the user knows they’re editing
+            this.Title = "Edit Location";
+
+            // Pre-fill UI fields
+            LocationNameBox.Text = existing.Name; 
+        }
+
+        /// <summary>
         /// Handles the Save button click: validates input and inserts a new Location
         /// </summary>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            // Read and trim the input from the LocationNameBox
+            // 1) Validation
             var name = LocationNameBox.Text.Trim();
-
-            // Ensure the name is not empty or whitespace
-            if (!string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrEmpty(name))
             {
-                // Insert new Location record
-                _adapter.InsertLocation(new Location { Name = name });
-                // Notify user of success
-                MessageBox.Show("Location added successfully.");
-                // Close window to return to previous view
-                this.Close();
+                MessageBox.Show(
+                    "Please enter a name.",
+                    "Validation",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return;
+            }
+
+            // 2) EDIT mode?
+            if (_editingLocation != null)
+            {
+                // Update the existing model
+                _editingLocation.Name = name;
+                _adapter.UpdateLocation(_editingLocation);  // Calls your adapter’s Update
             }
             else
             {
-                // Prompt user to enter a valid name
-                MessageBox.Show("Please enter a location name.");
+                // 3) ADD mode: exactly your existing logic
+                var loc = new Location { Name = name };
+                _adapter.InsertLocation(loc);
             }
+
+            // 4) Close dialog with “OK”
+            this.DialogResult = true;
         }
 
         /// <summary>
